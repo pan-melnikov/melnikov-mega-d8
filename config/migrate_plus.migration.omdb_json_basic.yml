@@ -1,0 +1,33 @@
+# This is the *second* configuration to import with configuration type: 'Migration'
+uuid: adcca1ff-087e-4742-912a-7d5117813ddf
+id: omdb_json_basic
+label: JSON feed of movies (Basic page)
+migration_group: json_example
+source:
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: json
+  include_raw_data: true
+  # The 'urls' setting is required, but in this case it is being provided by
+  # the group as part of the shared_configuration.
+  # urls: 'http://www.omdbapi.com/?s=space&type=movie&r=json&apikey=86e4b169'
+  item_selector: Search
+  fields:
+    -
+      name: movieName
+      label: 'Movie Name'
+      selector: Title
+    -
+      name: imdbID
+      label: 'IMDB ID'
+      selector: imdbID
+  ids:
+    imdbID:
+      type: string
+destination:
+  plugin: entity:node
+process:
+  type:
+    plugin: default_value
+    default_value: page
+  title: movieName
