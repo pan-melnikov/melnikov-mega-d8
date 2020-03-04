@@ -1,10 +1,9 @@
-# This is the *first* configuration to import with configuration type: 'Migration Group'
 uuid: 83170e08-b848-40be-898e-c78c9b12a1f9
 langcode: en
 status: true
 dependencies: {  }
 id: json_example
-label: JSON Example
+label: 'JSON Example'
 description: ''
 source_type: ''
 module: null
