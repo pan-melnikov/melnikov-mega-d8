@@ -2,14 +2,14 @@ uuid: 30ffeeb5-b159-43c2-a7c1-400f2e57dcd2
 langcode: en
 status: true
 dependencies:
+  module:
+    - node
+    - search_api
   config:
     - field.storage.node.body
     - field.storage.node.comment
     - field.storage.node.field_tags
     - search_api.server.my_pantheon_solr
-  module:
-    - node
-    - search_api
 id: my_content_index
 name: 'My content index'
 description: ''
@@ -59,7 +59,8 @@ field_settings:
     label: Title
     datasource_id: 'entity:node'
     property_path: title
-    type: string
+    type: text
+    boost: !!float 2
     dependencies:
       module:
         - node
