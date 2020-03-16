@@ -43,6 +43,42 @@ if (defined('PANTHEON_ENVIRONMENT')) {
   $settings['cache']['bins']['form']      = 'cache.backend.database';
 }
 
+/***** REDIRECTS *****/
+if (isset($_ENV['PANTHEON_ENVIRONMENT']) && php_sapi_name() != 'cli') {
+  // Redirect to https://$primary_domain in the Live environment
+  if ($_ENV['PANTHEON_ENVIRONMENT'] === 'dev') {
+    // Replace www.example.com with your registered domain name.
+    $primary_domain = 'dev-pantheon.angarsky.ru';
+  }
+  else {
+    // Redirect to HTTPS on every Pantheon environment.
+    $primary_domain = $_SERVER['HTTP_HOST'];
+  }
+
+  $requires_redirect = FALSE;
+
+  // Ensure the site is being served from the primary domain.
+  if ($_SERVER['HTTP_HOST'] != $primary_domain) {
+    $requires_redirect = TRUE;
+  }
+
+  if ($requires_redirect === TRUE) {
+
+    // Name transaction "redirect" in New Relic for improved reporting (optional).
+    if (extension_loaded('newrelic')) {
+      newrelic_name_transaction("redirect");
+    }
+
+    header('HTTP/1.0 301 Moved Permanently');
+    header('Location: https://'. $primary_domain . $_SERVER['REQUEST_URI']);
+    exit();
+  }
+  // Drupal 8 Trusted Host Settings
+  if (is_array($settings)) {
+    $settings['trusted_host_patterns'] = array('^'. preg_quote($primary_domain) .'$');
+  }
+}
+
 /**
  * If there is a local settings file, then include it
  */
