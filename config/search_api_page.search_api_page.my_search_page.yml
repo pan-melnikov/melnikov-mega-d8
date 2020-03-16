@@ -1,0 +1,24 @@
+uuid: d89d3fa8-cab5-4fbc-be59-f54b3273ae2a
+langcode: en
+status: true
+dependencies:
+  config:
+    - search_api.index.my_content_index
+id: my_search_page
+label: 'My Search Page'
+path: search-page
+clean_url: true
+show_all_when_no_keys: false
+index: my_content_index
+limit: 10
+searched_fields:
+  body: body
+style: view_modes
+view_mode_configuration:
+  'entity:node':
+    default: teaser
+    overrides:
+      article: ''
+      page: ''
+show_search_form: true
+parse_mode: direct
