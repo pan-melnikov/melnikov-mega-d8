@@ -32,7 +32,8 @@
         "pantheon-systems/drupal-integrations": "^8",
         "pantheon-systems/quicksilver-pushback": "^2",
         "rvtraveller/qs-composer-installer": "^1.1",
-        "zaporylie/composer-drupal-optimizations": "^1.0"
+        "zaporylie/composer-drupal-optimizations": "^1.0",
+        "slowprog/composer-copy-file": "~0.3"
     },
     "require-dev": {
         "behat/behat": "3.*",
@@ -78,10 +79,12 @@
         "prepare-for-pantheon": "DrupalProject\\composer\\ScriptHandler::prepareForPantheon",
         "post-install-cmd": [
             "@drupal-scaffold",
-            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
+            "SlowProg\\CopyFile\\ScriptHandler::copy"
         ],
         "post-update-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
+            "SlowProg\\CopyFile\\ScriptHandler::copy"
         ],
         "post-create-project-cmd": [
             "@drupal-scaffold",
@@ -114,6 +117,9 @@
             "file-mapping": {
                 "[project-root]/.editorconfig": false
             }
+        },
+        "copy-file": {
+            "scripts/quicksilver/db_sanitization": "web/private/scripts/quicksilver/db_sanitization"
         }
     },
     "config": {
