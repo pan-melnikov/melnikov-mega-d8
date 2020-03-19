@@ -8,3 +8,8 @@ workflows:
       - type: webphp
         description: Push changes back to GitHub if needed
         script: private/scripts/quicksilver/quicksilver-pushback/push-back.php
+  clone_database:
+    after:
+      - type: webphp
+        description: Sanitize the DB
+        script: private/scripts/quicksilver/db_sanitization/db_sanitization_drupal.php
